@@ -2,6 +2,7 @@
 import './App.css';
 import React, { useState } from 'react'
 import { sampleText } from './sampleText'
+import marked from 'marked'
 
 function App() {
 
@@ -12,6 +13,11 @@ function App() {
     setText(text)
   }
 
+  const renderText = text => {
+    const __html = marked(text, { sanitize: true })
+    return { __html }
+  }
+
   return (
     <div className="container">
       <div className="row">
@@ -19,7 +25,7 @@ function App() {
           <textarea onChange={handleChange} value={text} className='form-control' rows="35" />
         </div>
         <div className="col-sm-6">
-          <div>{sampleText}</div>
+          <div dangerouslySetInnerHTML={renderText(text)}></div>
         </div>
       </div>
     </div>
